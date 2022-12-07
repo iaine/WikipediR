@@ -378,8 +378,8 @@ page_images <- function(language = NULL, project = NULL, domain = NULL, pagetitl
                            clean_response = FALSE, ...){
   
   #Format, construct URL.
-  properties <- match.arg(arg = properties, several.ok = TRUE)
-  properties <- paste(properties, collapse = "|")
+  #properties <- match.arg(arg = properties, several.ok = TRUE)
+  #properties <- paste(properties, collapse = "|")
   
   url <- url_gen(language, project, domain)
   query_param <- list(
