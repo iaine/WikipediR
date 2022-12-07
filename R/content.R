@@ -355,3 +355,91 @@ page_revisions <- function(language = NULL, project = NULL, domain = NULL, paget
   #Return
   return(content)
 }
+
+#'@title Retrieves the images for a particular page. 
+#'
+#'@description
+#'Retrieves the most recent changes for a particular page. 
+#'Returns a JSON object. 
+#'The maximum number of changes is 50
+#'
+#'@param language The language code of the project you wish to query,
+#'if appropriate.
+#'
+#'@param project The project you wish to query ("wikiquote"), if appropriate.
+#'Should be provided in conjunction with \code{language}.
+#'
+#'@param domain If you want to query a non-Wikipedia installation, add the domain here.
+#'
+#'@param pagetitle The page title to be queried 
+#'
+#'@param limit 50 is the upper limit for anonymous users. 
+page_images <- function(language = NULL, project = NULL, domain = NULL, pagetitle, limit=10,
+                           clean_response = FALSE, ...){
+  
+  #Format, construct URL.
+  properties <- match.arg(arg = properties, several.ok = TRUE)
+  properties <- paste(properties, collapse = "|")
+  
+  url <- url_gen(language, project, domain)
+  query_param <- list(
+    action = "query",
+    prop   = "images",
+    titles = pagetitle,
+    imlimit = limit
+  )
+  
+  #Run
+  content <- query(url, "rcontent", clean_response, query_param = query_param, ...)
+  
+  #Check for invalid RevIDs
+  #invalid_revs(content)
+  
+  #Return
+  return(content)
+}
+
+#'@title Retrieves the information about a particular image. 
+#'
+#'@description
+#'Retrieves the information about a particular image.
+#'Returns a JSON object. 
+#'The maximum number of changes is 50
+#'
+#'@param language The language code of the project you wish to query,
+#'if appropriate.
+#'
+#'@param project The project you wish to query ("wikiquote"), if appropriate.
+#'Should be provided in conjunction with \code{language}.
+#'
+#'@param domain If you want to query a non-Wikipedia installation, add the domain here.
+#'
+#'@param pagetitle The page title to be queried 
+#'
+#'@param limit 50 is the upper limit for anonymous users. 
+image_info <- function(language = NULL, project = NULL, domain = NULL, imagetitle, limit=50,
+                           properties = c("timestamp","user","url", "metadata"),
+                           clean_response = FALSE, ...){
+  
+  #Format, construct URL.
+  properties <- match.arg(arg = properties, several.ok = TRUE)
+  properties <- paste(properties, collapse = "|")
+  
+  url <- url_gen(language, project, domain)
+  query_param <- list(
+    action = "query",
+    prop   = "imageinfo",
+    iiprop = properties,
+    titles = paste0("File:",imagetitle), 
+    iilimit = limit
+  )
+  
+  #Run
+  content <- query(url, "rcontent", clean_response, query_param = query_param, ...)
+  
+  #Check for invalid RevIDs
+  #invalid_revs(content)
+  
+  #Return
+  return(content)
+}
