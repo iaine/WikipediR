@@ -423,7 +423,7 @@ image_info <- function(language = NULL, project = NULL, domain = NULL, imagetitl
     action = "query",
     prop   = "imageinfo",
     iiprop = properties,
-    titles = paste0("File:",imagetitle), 
+    titles = imagetitle, 
     iilimit = limit
   )
   
