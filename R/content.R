@@ -377,10 +377,6 @@ page_revisions <- function(language = NULL, project = NULL, domain = NULL, paget
 page_images <- function(language = NULL, project = NULL, domain = NULL, pagetitle, limit=10,
                            clean_response = FALSE, ...){
   
-  #Format, construct URL.
-  #properties <- match.arg(arg = properties, several.ok = TRUE)
-  #properties <- paste(properties, collapse = "|")
-  
   url <- url_gen(language, project, domain)
   query_param <- list(
     action = "query",
@@ -391,9 +387,6 @@ page_images <- function(language = NULL, project = NULL, domain = NULL, pagetitl
   
   #Run
   content <- query(url, "rcontent", clean_response, query_param = query_param, ...)
-  
-  #Check for invalid RevIDs
-  #invalid_revs(content)
   
   #Return
   return(content)
